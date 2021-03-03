@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import { Matrix } from './matrix.js';
 
@@ -12,6 +11,13 @@ export class App extends React.Component {
         }
         this.setMatrix = this.setMatrix.bind(this);
         this.freezeMatrix = this.freezeMatrix.bind(this);
+        this.reset = this.reset.bind(this);
+    }
+
+    reset() {
+        this.setState({
+            stage: 0
+        });
     }
 
     setMatrix() {
@@ -51,6 +57,7 @@ export class App extends React.Component {
                         </select>
 
                         <button onClick={this.setMatrix}>GO!</button>
+                        <button onClick={this.reset}>Reset</button>
                     </div>
                 );
                 break;
@@ -59,6 +66,7 @@ export class App extends React.Component {
                     <div>
                         <Matrix mwidth={this.state.columns} mheight={this.state.rows} />
                         <button onClick={this.freezeMatrix}>GO!</button>
+                        <button onClick={this.reset}>Reset</button>
                     </div>
                 );
                 break;
@@ -66,6 +74,7 @@ export class App extends React.Component {
                 returnValue = (
                     <div>
                         <Matrix frozen={true} mwidth={this.state.columns} mheight={this.state.rows} />
+                        <button onClick={this.reset}>Reset</button>
                     </div>
                 );
                 break;

@@ -1,13 +1,7 @@
 import React from 'react';
-import { fraction } from 'mathjs';
-import ReactDOM from 'react-dom';
 import './index.css';
 
 export class MatrixSquare extends React.Component {
-
-  constructor(props) {
-    super(props)
-  }
 
   componentWillMount() {
     this.update = this.update.bind(this);
@@ -19,7 +13,7 @@ export class MatrixSquare extends React.Component {
 
   render() {
     return (
-      <input placeholder="0" id={this.props.id} style={{textAlign: "center", height: 2 + "em", width: 3 + "em"}} onChange={this.update} value={this.props.value} className="matrixSquare"></input>
+      <input id={this.props.id} style={{textAlign: "center", height: 2 + "em", width: 3 + "em"}} onChange={this.update} value={this.props.value} className="matrixSquare"></input>
     );
   }
 

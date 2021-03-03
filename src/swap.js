@@ -10,23 +10,22 @@ export class Swap extends React.Component {
     this.confirmSwap = this.confirmSwap.bind(this);
   }
 
-  confirmAdd() {
+  confirmSwap() {
     const swapA = Math.floor( document.getElementById("swapA").value ) - 1;
     const swapB = Math.floor( document.getElementById("swapB").value ) - 1;
-    if(!swapA || !swapB) return;
     this.props.action(swapA, swapB);
     this.reset();
   }
 
   reset() {
-    document.getElementById("swapA").value = 0;
-    document.getElementById("swapB").value = 0;
+    document.getElementById("swapA").value = 1;
+    document.getElementById("swapB").value = 1;
   }
 
   render() {
     let options = [];
     for(let i = 1; i <= this.props.rowCount; i++) {
-      options.push(<option value={i}>{i}</option>);
+      options.push(<option value={i} key={i}>{i}</option>);
     }
       return (
           <div>

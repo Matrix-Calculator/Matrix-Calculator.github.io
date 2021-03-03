@@ -7,33 +7,61 @@ export class Multiply extends React.Component {
   constructor(props) {
     super(props)
     this.confirmMultiply = this.confirmMultiply.bind(this);
+    this.toChange = this.toChange.bind(this);
+    this.multiplierChange = this.multiplierChange.bind(this);
+    // this.state = {
+    //   to: 1,
+    //   multiplier: ""
+    // }
+  }
+
+  toChange(value) {
+    this.setState({
+      to: value.target.value
+    });
+  }
+
+  multiplierChange(value) {
+    this.setState({
+      multiplier: value.target.value
+    });
   }
 
   confirmMultiply() {
-    const to = Math.floor( document.getElementById("multiplyTo").value ) - 1;
-    const multiplier = fraction( document.getElementById("multiplyMultiplier").value || 1 );
-    this.props.action(to, multiplier);
-    this.reset();
+    try {
+      const to = Math.floor( document.getElementById("multiplyTo").value ) - 1;
+      const multiplier = fraction( document.getElementById("multiplyMultiplier").value || 1 );
+      this.props.action(to, multiplier);
+      //this.rops.reset();
+      this.props.clear();
+    }
+    catch (error) {
+      console.log("Error", error);
+    }
   }
 
   reset() {
-      document.getElementById("multiplyTo").value = 0;
-      document.getElementById("multiplyMultiplier").value = "";
+    // this.setState({
+    //   to: 1,
+    //   multiplier: ""
+    // })
   }
 
   render() {
     let options = [];
     for(let i = 1; i <= this.props.rowCount; i++) {
-      options.push(<option value={i}>{i}</option>);
+      options.push(<option value={i} key={i}>{i}</option>);
     }
+    // <select onChange={this.toChange} value={this.state.to} id='multiplyTo'></select>
+    // <input onChange={this.multiplierChange} id="multiplyMultiplier" value={this.state.multiplier} placeholder="1"></input>
       return (
           <div>
               Multiply row
-              <select id='multiplyTo'>
+              <select onChange={this.toChange} id='multiplyTo'>
                 {options}
               </select>
               by
-              <input id="multiplyMultiplier" placeholder="1"></input>
+              <input onChange={this.multiplierChange} id="multiplyMultiplier" placeholder="1"></input>
               <button onClick={this.confirmMultiply}>
                 Confirm
               </button>

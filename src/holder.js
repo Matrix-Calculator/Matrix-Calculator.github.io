@@ -6,12 +6,16 @@ export class Holder {
         this.value = fraction("0");
     }
 
+    freeze() {
+        if(!this.display) { this.display = "0"; }
+    }
+
     getDisplay() {
         return this.display;
     }
 
     setDisplay(display) {
-        while(display.length > 0 && display[0] === "0") {
+        while(display.length > 1 && display[0] === "0") {
             display = display.substr(1);
         }
         this.display = display;
@@ -36,6 +40,9 @@ export class Holder {
                 this.display = this.value.n;
             } else {
                 this.display = this.value.n + "/" + this.value.d;
+            }
+            if(this.value.s == "-1") {
+                this.display = "-" + this.display;
             }
         } catch {
             console.log("Errors Updating");

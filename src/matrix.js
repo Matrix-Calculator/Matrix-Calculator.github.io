@@ -4,6 +4,7 @@ import { Holder } from './holder.js';
 import { MatrixSquare } from './matrix-square.js';
 import { Add } from './add.js';
 import { Multiply } from './multiply.js';
+import { Swap } from './swap.js';
 
 export class Matrix extends React.Component {
 
@@ -24,6 +25,7 @@ export class Matrix extends React.Component {
         };
 
         this.recieveFromSquare = this.recieveFromSquare.bind(this);
+        this.clearFunctions = this.clearFunctions.bind(this);
         this.add = this.add.bind(this);
         this.multiply = this.multiply.bind(this);
         this.swap = this.swap.bind(this);
@@ -45,14 +47,50 @@ export class Matrix extends React.Component {
 
     swap(a, b) {
         for(let column = 0; column < this.props.mwidth; column++) {
-            let aData = this.state.data[a];
-            this.state.data[a] = this.state.data[b];
-            this.state.data[b] = aData;
+            let aData = this.state.data[a][column];
+            this.state.data[a][column] = this.state.data[b][column];
+            this.state.data[b][column] = aData;
         }
         this.update();
     }
 
+    clearFunctions() {
+        try {
+            const add = {
+                firstSelect: document.getElementById("addFrom"),
+                secondSelect: document.getElementById("addTo"),
+                multiplier: document.getElementById("addMultiplier")
+            }
+            const multiply = {
+                select: document.getElementById("multiplyTo"),
+                multiplier: document.getElementById("multiplyMultiplier")
+            }
+            const swap = {
+                firstSelect: document.getElementById("swapA"),
+                secondSelect: document.getElementById("swapB")
+            }
+
+            let defaultSelect = 1;
+            let defaultMultiplier = "";
+
+            add.firstSelect.value = defaultSelect;
+            add.secondSelect.value = defaultSelect;
+            add.multiplier.value = defaultMultiplier;
+
+            multiply.select.value = defaultSelect;
+            multiply.multiplier.value = defaultMultiplier;
+
+            swap.firstSelect.value = defaultSelect;
+            swap.secondSelect.value = defaultSelect;
+
+            console.log("Cleared");
+        } catch(e) {
+            console.log("Errored", e);
+        }
+    }
+
     recieveFromSquare(row, column, newDisplay) {
+        if(this.props.frozen) return;
         this.state.data[row][column].setDisplay(newDisplay);
         this.update();
     }
@@ -65,6 +103,7 @@ export class Matrix extends React.Component {
         for(let row = 0; row < this.state.data.length; row++) {
             let currentRow = [];
             for(let column = 0; column < this.state.data[row].length; column++) {
+                if(this.props.frozen) { this.state.data[row][column].freeze(); }
                 currentRow.push(
                     <MatrixSquare update={this.recieveFromSquare} row={row} column={column} value={this.state.data[row][column].getDisplay()} key={row+"00"+column} />
                 );
@@ -81,8 +120,9 @@ export class Matrix extends React.Component {
             return (
                 <div>
                     {display}
-                    <Add rowCount={this.props.mheight} action={this.add} />
-                    <Multiply rowCount={this.props.mheight} action={this.multiply} />
+                    <Add rowCount={this.props.mheight} action={this.add} clear={this.clearFunctions} />
+                    <Multiply rowCount={this.props.mheight} action={this.multiply} clear={this.clearFunctions} />
+                    <Swap rowCount={this.props.mheight} action={this.swap} clear={this.clearFunctions} />
                 </div>
             );
         } else {
