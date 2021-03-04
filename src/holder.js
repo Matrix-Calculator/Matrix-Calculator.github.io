@@ -15,6 +15,7 @@ export class Holder {
     }
 
     setDisplay(display) {
+        if(display.match("[^0-9-/]")) return;
         while(display.length > 1 && display[0] === "0") {
             display = display.substr(1);
         }
@@ -30,22 +31,22 @@ export class Holder {
         try {
             this.value = fraction(this.display)
         } catch {
-            console.log("Errors Updating");
+            console.log("Errors Syncing Value");
         }
     }
 
     syncDisplay() {
         try {
-            if(this.value.d == "1") {
+            if(this.value.d === "1" || this.value.d === 1) {
                 this.display = this.value.n;
             } else {
                 this.display = this.value.n + "/" + this.value.d;
             }
-            if(this.value.s == "-1") {
+            if(this.value.s === "-1" || this.value.s === -1) {
                 this.display = "-" + this.display;
             }
         } catch {
-            console.log("Errors Updating");
+            console.log("Errors Syncing Display");
         }
     }
 

@@ -32,19 +32,11 @@ export class Multiply extends React.Component {
       const to = Math.floor( document.getElementById("multiplyTo").value ) - 1;
       const multiplier = fraction( document.getElementById("multiplyMultiplier").value || 1 );
       this.props.action(to, multiplier);
-      //this.rops.reset();
       this.props.clear();
     }
     catch (error) {
-      console.log("Error", error);
+      console.log("Multiply Error", error);
     }
-  }
-
-  reset() {
-    // this.setState({
-    //   to: 1,
-    //   multiplier: ""
-    // })
   }
 
   render() {
@@ -52,8 +44,6 @@ export class Multiply extends React.Component {
     for(let i = 1; i <= this.props.rowCount; i++) {
       options.push(<option value={i} key={i}>{i}</option>);
     }
-    // <select onChange={this.toChange} value={this.state.to} id='multiplyTo'></select>
-    // <input onChange={this.multiplierChange} id="multiplyMultiplier" value={this.state.multiplier} placeholder="1"></input>
       return (
           <div>
               Multiply row

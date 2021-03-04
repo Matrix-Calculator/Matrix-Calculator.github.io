@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
 import { Matrix } from './matrix.js';
+import { ThemedPage } from './ThemedPage.js';
 
 export class App extends React.Component {
 
@@ -44,9 +45,8 @@ export class App extends React.Component {
                 for(let i = 1; i < 11; i++) {
                     options.push(<option key={i} value={i}>{i}</option> );
                 }
-                console.log(options);
                 returnValue = (
-                    <div>
+                    <ThemedPage>
                         <label htmlFor="row">Row: </label>
                         <select id="row">
                             {options}
@@ -58,40 +58,32 @@ export class App extends React.Component {
 
                         <button onClick={this.setMatrix}>GO!</button>
                         <button onClick={this.reset}>Reset</button>
-                    </div>
+                    </ThemedPage>
                 );
                 break;
             case 1:
                 returnValue = (
-                    <div>
+                    <ThemedPage>
                         <Matrix mwidth={this.state.columns} mheight={this.state.rows} />
                         <button onClick={this.freezeMatrix}>GO!</button>
                         <button onClick={this.reset}>Reset</button>
-                    </div>
+                    </ThemedPage>
                 );
                 break;
             case 2:
                 returnValue = (
-                    <div>
+                    <ThemedPage>
                         <Matrix frozen={true} mwidth={this.state.columns} mheight={this.state.rows} />
                         <button onClick={this.reset}>Reset</button>
-                    </div>
+                    </ThemedPage>
                 );
                 break;
             default:
                 returnValue = (
-                    <div>Epic</div>
+                    <div>Uh-oh... Something broke (HTTP Response Code 418)</div>
                 )
                 break;
         }
-        console.log(returnValue);
         return returnValue;
-        //    <Matrix mwidth="3" mheight="5" />
     }
 }
-/*
-    <p>
-    Rows: <input type="number"></input>
-    Columns: <input type="number"></input>
-    </p>
-*/

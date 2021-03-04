@@ -10,20 +10,15 @@ export class Add extends React.Component {
   }
 
   confirmAdd() {
-    const from = Math.floor( document.getElementById("addFrom").value ) - 1;
-    const multiplier = fraction( document.getElementById("addMultiplier").value || 0 );
-    console.log(multiplier);
-    const to = Math.floor( document.getElementById("addTo").value ) - 1;
-    this.props.action(to, multiplier, from);
-    //this.reset();
-    this.props.clear();
-    console.log("completed");
-  }
-
-  reset() {
-    //document.getElementById("addFrom").value = 1;
-    //document.getElementById("addMultiplier").value = "";
-    //document.getElementById("addTo").value = 1;
+    try {
+      const from = Math.floor( document.getElementById("addFrom").value ) - 1;
+      const multiplier = fraction( document.getElementById("addMultiplier").value || 0 );
+      const to = Math.floor( document.getElementById("addTo").value ) - 1;
+      this.props.action(to, multiplier, from);
+      this.props.clear();
+    } catch(error) {
+      console.log("Add Error", error);
+    }
   }
 
   render() {

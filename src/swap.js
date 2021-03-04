@@ -1,6 +1,4 @@
 import React from 'react';
-import { fraction } from 'mathjs';
-import ReactDOM from 'react-dom';
 import './index.css';
 
 export class Swap extends React.Component {
@@ -14,12 +12,7 @@ export class Swap extends React.Component {
     const swapA = Math.floor( document.getElementById("swapA").value ) - 1;
     const swapB = Math.floor( document.getElementById("swapB").value ) - 1;
     this.props.action(swapA, swapB);
-    this.reset();
-  }
-
-  reset() {
-    document.getElementById("swapA").value = 1;
-    document.getElementById("swapB").value = 1;
+    this.props.clear();
   }
 
   render() {

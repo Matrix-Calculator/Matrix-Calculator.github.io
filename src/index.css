@@ -1,51 +1,55 @@
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+html, body {
+    padding: 0;
+    margin: 0;
 }
 
-ol, ul {
-  padding-left: 30px;
+.header {
+    margin-top: 1vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    font-size: x-large;
+    text-align: center;
+    background: #FFC20F;
+    color: black;
+    width: 98vw;
+    border-radius: 25px 25px 0px 0px;
 }
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
+.bar {
+    padding:0;
+    margin:0;
+    height: 1vh;
+    background-color: black;
 }
 
-.status {
-  margin-bottom: 10px;
+.inside {
+    background-color: lightgrey;
+    height: 76vh;
+    width: 98vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-bottom: 1vh;
+    border-radius: 0px 0px 25px 25px;
+}
+.imag {
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
+img {
+    opacity: 0.2;
+    margin-left: 28vw;
+    align-content: center;
 }
 
-.square:focus {
-  outline: none;
+.div1 {
+    padding-top: 7.5vh;
+    padding-left: 5vw;
 }
 
-.kbd-navigation .square:focus {
-  background: #ddd;
+body{
+    background-color: black;
 }
-
-.game {
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
-}
-

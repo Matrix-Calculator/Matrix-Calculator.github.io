@@ -85,7 +85,7 @@ export class Matrix extends React.Component {
 
             console.log("Cleared");
         } catch(e) {
-            console.log("Errored", e);
+            console.log("Clearing Errored", e);
         }
     }
 
