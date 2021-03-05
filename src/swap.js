@@ -21,12 +21,12 @@ export class Swap extends React.Component {
       options.push(<option value={i} key={i}>{i}</option>);
     }
       return (
-          <div>
+          <div className="inner-text">
               Swap rows
               <select id='swapA'>
                 {options}
               </select>
-              and
+              <span>and</span>
               <select id='swapB'>
                 {options}
               </select>

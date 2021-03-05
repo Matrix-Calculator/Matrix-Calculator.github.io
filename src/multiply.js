@@ -45,12 +45,12 @@ export class Multiply extends React.Component {
       options.push(<option value={i} key={i}>{i}</option>);
     }
       return (
-          <div>
+          <div className="inner-text">
               Multiply row
               <select onChange={this.toChange} id='multiplyTo'>
                 {options}
               </select>
-              by
+              <span>by</span>
               <input onChange={this.multiplierChange} id="multiplyMultiplier" placeholder="1"></input>
               <button onClick={this.confirmMultiply}>
                 Confirm

@@ -27,20 +27,17 @@ export class Add extends React.Component {
       options.push(<option value={i} key={i}>{i}</option>);
     }
       return (
-          <div>
+          <div className="inner-text">
               Add row
               <select id='addFrom'>
                 {options}
               </select>
-              *
-              <input id="addMultiplier" placeholder="0"></input>
-              to row
+              <span>multiplied by</span>
+              <input id="addMultiplier" placeholder="0"></input> to row
               <select id='addTo'>
                 {options}
               </select>
-              <button onClick={this.confirmAdd}>
-                Confirm
-              </button>
+              <button onClick={this.confirmAdd}>Confirm</button>
           </div>
       )
   }

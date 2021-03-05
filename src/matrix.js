@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
 import { Holder } from './holder.js';
+import { equal } from 'mathjs';
 import { MatrixSquare } from './matrix-square.js';
 import { Add } from './add.js';
 import { Multiply } from './multiply.js';
@@ -15,7 +16,12 @@ export class Matrix extends React.Component {
         for(let row = 0; row < this.props.mheight; row++) {
             let currentRow = [];
             for(let column = 0; column < this.props.mwidth; column++) {
-                currentRow.push(new Holder());
+                //currentRow.push(new Holder());
+                if(this.props.source) {
+                    currentRow.push(this.props.source[row][column]);
+                } else {
+                    currentRow.push(new Holder());
+                }
             }
             data.push(currentRow);
         }
@@ -31,27 +37,61 @@ export class Matrix extends React.Component {
         this.swap = this.swap.bind(this);
     }
 
-    add(to, multiplier, from) {
-        for(let column = 0; column < this.props.mwidth; column++) {
-            this.state.data[to][column].add(multiplier, this.state.data[from][column]);
+    deepcopy() {
+        // TOODO: Potentially change to a mapping system
+        let full = [];
+        for(let row = 0; row < this.props.mheight; row++) {
+            let currentRow = [];
+            for(let column = 0; column < this.props.mwidth; column++) {
+                currentRow.push(new Holder(this.state.data[row][column].display));
+            }
+            full.push(currentRow);
         }
-        this.update();
+        return full;
+    }
+
+    add(to, multiplier, from) {
+        let full = this.deepcopy();
+        let actuallyChanged = false;
+        for(let column = 0; column < this.props.mwidth; column++) {
+            if(this.state.data[to][column].add(multiplier, this.state.data[from][column])) {
+                actuallyChanged = true;
+            }
+        }
+        if(actuallyChanged) {
+            this.update();
+            //this.props.update(full);
+        }
     }
 
     multiply(to, multiplier) {
+        let full = this.deepcopy();
+        let actuallyChanged = false;
         for(let column = 0; column < this.props.mwidth; column++) {
-            this.state.data[to][column].multiply(multiplier);
+            if(this.state.data[to][column].multiply(multiplier)) {
+                actuallyChanged = true;
+            }
         }
-        this.update();
+        if(actuallyChanged) {
+            this.update();
+            //this.props.update(full);
+        }
     }
 
     swap(a, b) {
+        let full = this.deepcopy();
+        let actuallyChanged = false;
         for(let column = 0; column < this.props.mwidth; column++) {
             let aData = this.state.data[a][column];
+            let bData = this.state.data[b][column];
+            if(equal(aData.value, bData.value)) actuallyChanged = true;
             this.state.data[a][column] = this.state.data[b][column];
             this.state.data[b][column] = aData;
         }
-        this.update();
+        if(actuallyChanged) {
+            this.update();
+            //this.props.update(full);
+        }
     }
 
     clearFunctions() {
@@ -93,6 +133,9 @@ export class Matrix extends React.Component {
         if(this.props.frozen) return;
         this.state.data[row][column].setDisplay(newDisplay);
         this.update();
+        if(this.props.update) {
+            this.props.update(this.state.data);
+        }
     }
 
     update() { this.setState({}); }
@@ -105,6 +148,7 @@ export class Matrix extends React.Component {
             for(let column = 0; column < this.state.data[row].length; column++) {
                 if(this.props.frozen) { this.state.data[row][column].freeze(); }
                 currentRow.push(
+                    // Fix this, no new lines
                     <MatrixSquare update={this.recieveFromSquare} row={row} column={column} value={this.state.data[row][column].getDisplay()} key={row+"00"+column} />
                 );
             }
@@ -116,21 +160,27 @@ export class Matrix extends React.Component {
             );
         }
 
-        if(this.props.frozen) {
-            return (
-                <div>
-                    {display}
-                    <Add rowCount={this.props.mheight} action={this.add} clear={this.clearFunctions} />
-                    <Multiply rowCount={this.props.mheight} action={this.multiply} clear={this.clearFunctions} />
-                    <Swap rowCount={this.props.mheight} action={this.swap} clear={this.clearFunctions} />
-                </div>
-            );
-        } else {
-            return (
-                <div>
+
+        return (
+            <>
+            <div className="center">
+                <div id={this.props.id} className={this.props.className} >
                     {display}
                 </div>
-            );
-        }
+            </div>
+                {this.props.controls && (
+                    <>
+                    <br/>
+                    <div id="controls">
+                        <Add rowCount={this.props.mheight} action={this.add} clear={this.clearFunctions} />
+                        <br/>
+                        <Multiply rowCount={this.props.mheight} action={this.multiply} clear={this.clearFunctions} />
+                        <br/>
+                        <Swap rowCount={this.props.mheight} action={this.swap} clear={this.clearFunctions} />
+                    </div>
+                    </>
+                )}
+            </>
+        )
     }
 }

@@ -1,9 +1,10 @@
-import { add, multiply, fraction } from 'mathjs';
+import { add, multiply, fraction, equal } from 'mathjs';
 
 export class Holder {
-    constructor() {
-        this.display = "";
+    constructor(display="") {
+        this.display = display;
         this.value = fraction("0");
+        this.isSuccessful = true;
     }
 
     freeze() {
@@ -30,7 +31,10 @@ export class Holder {
     syncValue() {
         try {
             this.value = fraction(this.display)
+            this.isSuccessful = true;
+            console.log("Synced Values Successfully");
         } catch {
+            this.isSuccessful = false;
             console.log("Errors Syncing Value");
         }
     }
@@ -51,12 +55,20 @@ export class Holder {
     }
 
     add(factor, other) {
-        this.value = add(this.value, multiply(factor, other.value));
+        let result = add(this.value, multiply(factor, other.value));
+        if(equal(this.value, result)) return false;
+        // TODO: Clean up and add this checking to other options (multiply, i guess swap doesnt exist; probably make it exist)
+        console.log(this.value, result);
+        this.value = result;
         this.syncDisplay();
+        return true;
     }
 
     multiply(factor) {
-        this.value = multiply(factor, this.value);
+        let result = multiply(factor, this.value);
+        if(equal(this.value, result)) return false;
+        this.value = result;
         this.syncDisplay();
+        return true;
     }
 }

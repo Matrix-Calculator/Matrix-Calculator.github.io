@@ -4,7 +4,7 @@ import { Matrix } from './matrix.js';
 import { ThemedPage } from './ThemedPage.js';
 
 export class App extends React.Component {
-
+// TODO: Clean up everything, comment stuff, and re-make the whole backend
     constructor() {
         super();
         this.state = {
@@ -13,6 +13,23 @@ export class App extends React.Component {
         this.setMatrix = this.setMatrix.bind(this);
         this.freezeMatrix = this.freezeMatrix.bind(this);
         this.reset = this.reset.bind(this);
+        this.updateMatrix = this.updateMatrix.bind(this);
+        this.last = 0;
+        this.allMatricies = [];
+        this.theMatrix = false;
+    }
+
+    updateMatrix(data) {
+        /*
+        console.log("Updaing matrix...");
+        console.log("Last", this.last);
+        console.log("New", data);
+        this.allMatricies.push(data);
+        this.last = JSON.parse(JSON.stringify(data));
+        console.log(this.allMatricies);
+        */
+        this.theMatrix = data;
+        this.setState({});
     }
 
     reset() {
@@ -47,36 +64,69 @@ export class App extends React.Component {
                 }
                 returnValue = (
                     <ThemedPage>
-                        <label htmlFor="row">Row: </label>
-                        <select id="row">
-                            {options}
-                        </select>
-                        <label htmlFor="column"> Column: </label>
-                        <select id="column" style={{marginRight:1 +"em"}}>
-                            {options}
-                        </select>
-
-                        <button onClick={this.setMatrix}>GO!</button>
-                        <button onClick={this.reset}>Reset</button>
+                        <p className="inner-text instructions">Please select the dimensions for a matrix m x n then click the "Submit" button</p>
+                        <br/>
+                        <div class="offset">
+                            <ul>
+                                <li>
+                                    <label htmlFor="row">Number of rows: m = </label>
+                                    <select id="row">
+                                        {options}
+                                    </select>
+                                </li>
+                                <br/> <br/>
+                                <li>
+                                    <label htmlFor="column">Number of columns: n = </label>
+                                    <select id="column" style={{marginRight:1 +"em"}}>
+                                        {options}
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                        <br/> <br/>
+                        <button className="specialbutton" onClick={this.reset}>Reset</button>
+                        <button className="specialbutton submit" onClick={this.setMatrix}>Submit</button>
                     </ThemedPage>
                 );
                 break;
             case 1:
+                console.log("Your matrix", this.theMatrix);
                 returnValue = (
                     <ThemedPage>
-                        <Matrix mwidth={this.state.columns} mheight={this.state.rows} />
-                        <button onClick={this.freezeMatrix}>GO!</button>
-                        <button onClick={this.reset}>Reset</button>
+                        <p className="instructions">Please enter the elements of your matrix. Fields left empty will be interpreted as 0. <br/> You may use any mix of fractions and decimals. When you are done please click the "Submit" button. </p>
+                        <br/>
+                        <div className="center">
+                            <Matrix id="matrix" update={this.updateMatrix} mwidth={this.state.columns} mheight={this.state.rows} />
+                        </div>
+                        <br/> <br/>
+                        <button className="specialbutton" onClick={this.reset}>Reset</button>
+                        <button className="specialbutton submit" onClick={this.freezeMatrix}>Submit</button>
                     </ThemedPage>
                 );
                 break;
             case 2:
                 returnValue = (
                     <ThemedPage>
-                        <Matrix frozen={true} mwidth={this.state.columns} mheight={this.state.rows} />
-                        <button onClick={this.reset}>Reset</button>
+                        <p className="inner-text instructions">Please select one of the below operations to manipulate the primary matrix.</p>
+                        <Matrix id="matrix" source={this.theMatrix} frozen={true} controls={true} mwidth={this.state.columns} mheight={this.state.rows} />
+                        <br/>
+                        <button className="specialbutton" onClick={this.reset}>Reset</button>
                     </ThemedPage>
                 );
+                /*
+                let out = [];
+                for(let i = 0; i < this.allMatricies.length; i++) {
+                    out.push(
+                        <>
+                        <Matrix source={this.allMatricies[i]} frozen={true} mwidth={this.state.columns} mheight={this.state.rows} />
+                        <br></br>
+                        </>
+                    )
+                }
+                            <div className="old">
+                                {out}
+                            </div>
+                */
                 break;
             default:
                 returnValue = (
