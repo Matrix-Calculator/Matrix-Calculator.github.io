@@ -1,0 +1,178 @@
+/* -------------------- Global attributes -------------------- */
+/* Store # of columns in a matrix */
+:root {
+	--matrixColumnCount: 10;
+}
+
+/* -------------------- css grid styling for matrix display -------------------- */
+.wrapper {
+	display: grid;
+	grid-template-columns: repeat(var(--matrixColumnCount), auto);
+	align-items: center;
+	gap: 2px;
+	background-color: black;
+	border: 2px solid black;
+	margin: auto;
+	width: 100%;
+	/* min-width: min(calc(var(--matrixColumnCount) * 4.5vw), calc(98vw - 4em - 10px)); */
+	min-width: min(
+		calc(var(--matrixColumnCount) * 2.5em),
+		calc(98vw - 4em - 10px)
+	);
+	max-width: calc(98vw - 4em - 10px);
+	/* width: 75vh; */
+}
+
+/* Each specific square in a display matrix */
+.wrapper > span {
+	text-align: center;
+	background-color: #fafafa;
+	overflow: hidden;
+}
+
+.wrapper > input {
+	text-align: center;
+	background-color: #fafafa;
+	overflow: hidden;
+	border: none;
+}
+
+.wrapper > input:focus {
+	background-color: #fff0c6;
+	outline: none;
+}
+
+.standout {
+	background-color: #ffc20f;
+}
+
+/* Make each span/square in the active matrix gold */
+.active > div > span {
+	background-color: #ffc20f;
+}
+
+.front {
+	z-index: 1;
+}
+
+/* Remove 99 to make solid (for both background and box shadow */
+.floating {
+	padding: 1em 1em 1em 1em;
+	background-color: #c0c0c0c9;
+	border-radius: 25px;
+	box-shadow: 10px 10px #808080c9;
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: calc(100vh - 55px - 4.8vh - 4vh);
+}
+
+.vcenter {
+	display: flex;
+	justify-content: center;
+}
+
+.hcenter {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.specialbutton {
+	margin-bottom: 4px;
+	display: inline-block;
+	font-size: 1em;
+	padding: 5px;
+	cursor: pointer;
+	text-decoration: none;
+	outline: none;
+	color: black;
+	background-color: #ffc20f;
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 9px #999;
+}
+
+.specialbutton:hover {
+	background-color: #f5b600;
+}
+
+.specialbutton:focus {
+	background-color: #f5b600;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
+
+.specialbutton:active {
+	background-color: #f5b600;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
+
+.submit {
+	float: right;
+}
+
+.share {
+	float: right;
+	margin-bottom: 4px;
+	display: inline-block;
+	font-size: 1em;
+	padding: 5px;
+	cursor: pointer;
+	text-decoration: none;
+	outline: none;
+	color: black;
+	background-color: #ffc20f;
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 9px #999;
+}
+
+.share:hover {
+	background-color: #f5b600;
+}
+
+/*
+.share:focus {
+	background-color: #f5b600;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}*/
+
+.share:active {
+	background-color: #f5b600;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 60px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px;
+	position: absolute;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -35px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}

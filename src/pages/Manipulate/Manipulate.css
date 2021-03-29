@@ -1,0 +1,65 @@
+@media screen and (min-width: 1000px) {
+	#primaryLayout {
+		display: grid;
+		grid-template-columns: calc(0.6 * 98vw) calc(0.4 * 98vw);
+		align-items: center;
+		gap: 2px;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.dontoverflow {
+		margin: 15px;
+	}
+
+	.activeMatrix > .wrapper {
+		min-width: min(
+			calc(var(--matrixColumnCount) * 2.5em),
+			calc(0.6 * 98vw - 2em - 10px - 10px - 30px)
+		);
+	}
+
+	.wrapper {
+		min-width: min(
+			calc(var(--matrixColumnCount) * 2.5em),
+			calc(0.4 * 98vw - 2em - 10px - 10px - 30px)
+		);
+	}
+}
+
+@media screen and (max-width: 999px) {
+	.wrapper {
+		min-width: min(
+			calc(var(--matrixColumnCount) * 2.5em),
+			calc(98vw - 4em - 10px)
+		);
+	}
+}
+
+.activeMatrix > .wrapper > span {
+	min-width: 2.5em;
+}
+
+.scrollbar {
+	max-height: calc(100vh - 55px - 4.8vh - 7vh - 2em);
+	padding-right: 10px;
+	overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+.scrollbar::-webkit-scrollbar-track {
+	background-color: darkgray;
+	border-radius: 20px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+	background-color: gray;
+	border-radius: 20px;
+}
+
+.scrollbar::-webkit-scrollbar-button {
+	display: none;
+}
