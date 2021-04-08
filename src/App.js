@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { SHA256, enc } from "crypto-js";
 import copy from "copy-to-clipboard";
 import { fraction } from "mathjs";
 import Holder from "./Holder";
@@ -16,8 +17,10 @@ const App = () => {
 	const [operationList, setOpList] = useState([]);
 	const [currOpList, setCurrOpList] = useState([""]);
 
-	const URL = "https://gastongonnerman.com";
-
+	//const URL = "https://gastongonnerman.com";
+	const URL = "https://matrix-calculator.github.io";
+	//const URL = "http://192.168.1.104:3000";
+	//const URL = "http://172.16.78.63:3000";
 	// TODO: Unless this gets used, delete it and rename setIdFinal to setId
 	const setId = (newId) => {
 		setIdFinal(newId);
@@ -42,6 +45,29 @@ const App = () => {
 
 		let x = params.get("share");
 		if (!x) return;
+
+		/*console.log(
+			SHA256("g(aG4a{$" + prompt("Input a password")).toString(enc.Hex)
+		);*/
+
+		const pd = SHA256("g(aG4a{$" + prompt("Input a password")).toString(
+			enc.Hex
+		);
+
+		if (
+			pd !==
+			"1ae59cf212dd6d82bd30131603e4bca8b27693062f724cbe4541adbd6c6e7b59"
+		) {
+			if (
+				pd ===
+				"3e42cac644edbc1b64b2ad6fef4f486a92abcfa00fd1e5065e06ed8745f1e9df"
+			) {
+				window.location.assign("https://youtu.be/dQw4w9WgXcQ");
+			} else {
+				alert("Verification Failed");
+			}
+			return;
+		}
 
 		const lastIndex = x.lastIndexOf("]") + 1;
 

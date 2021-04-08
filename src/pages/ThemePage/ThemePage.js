@@ -26,7 +26,7 @@ const ThemePage = ({ removeBirds, children }) => {
 						tabIndex="-1"
 						rel="noreferrer noopener"
 						target="_blank"
-						href="https://youtu.be/dQw4w9WgXcQ"
+						href="https://youtu.be/fQGbXmkSArs"
 					>
 						a
 					</a>
