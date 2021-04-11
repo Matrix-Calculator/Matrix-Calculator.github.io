@@ -175,7 +175,7 @@ const App = () => {
 		let ops = currOpList.slice(0, id + 1).join("");
 		console.log("Cur", currOpList);
 
-		copy(URL + "/?share=" + firstMatrix + ops);
+		copy(URL + "/?share=" + firstMatrix + ops, { format: "text/plain" });
 	};
 
 	// Update a specific square while in editing phase
